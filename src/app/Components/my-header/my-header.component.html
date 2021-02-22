@@ -1,0 +1,31 @@
+<ion-header [translucent]="true" id="container">
+  <div class="pt-3 flex bg-gradient-to-r from-green-500 to-blue-400 flex-wrap">
+    <ion-title class="font-bold text-2xl text-black">
+      {{title}}
+    </ion-title>
+    <button *ngIf="menu==true || menu==null" id="btnBurger" slot="end" (click)="toggleMenu()" class="hamburger mr-4"
+            type="button">
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+    </button>
+    <button *ngIf="menu==false || menu!=null" slot="end" routerLink="../home" class="hamburger hamburger--spin-r is-active mr-4" type="button">
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+    </button>
+<div *ngIf="state" class=" rounded min-h-full min-w-full items-center rounded">
+    <div class="containerState rounded bg-black  mr-4 ml-4 grid grid-cols-2 grid-row-1">
+      <div class="rounded col-span-1 bg-white" style="margin-right: 0.1em">
+        <p class="text-green-500 text-xs ml-2">Restante:</p>
+        <p  class="text-green-500 font-bold ion-text-center text-2xl">300 €</p>
+      </div>
+      <div class="rounded col-span-1 bg-white" style="margin-left: 0.1em">
+        <p class="text-red-500 text-xs ml-2">Gastado:</p>
+        <p  class="text-red-500 font-bold ion-text-center text-2xl">3000000 €</p>
+      </div>
+    </div>
+</div>
+
+  </div>
+</ion-header>

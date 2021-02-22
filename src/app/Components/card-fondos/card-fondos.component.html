@@ -1,0 +1,30 @@
+<section class="flex min-w-full min-h-full  flex-col items-center">
+
+  <div  (click)="routerMe()" class="cursor-pointer mt-4 container rounded border-2 flex grid grid-rows-3 grid-cols-8">
+
+    <div class="m-3 rounded bg-blue-200 col-span-8 ">
+      <h1 class=" text-black font-bold text-center">Mes</h1>
+      <div class="m-3 col-span-2 bg-red-200 rounded">
+        <h1 class="pl-4 text-black font-bold text-xs text-red-800">Agua -600€</h1>
+      </div>
+    </div>
+    <canvas id="barChart" class="col-span-8 row-span-1"></canvas>
+    <div class="col-span-8 flex items-center justify-center">
+      <h1 class=" text-black font-bold  text-green-600 text-center ">Total: 10000€</h1>
+    </div>
+  </div>
+
+
+  <div  (click)="routerMe()" class="mt-4 container rounded border-2 flex grid grid-rows-3 grid-cols-8">
+  <div class="m-3 rounded bg-blue-200 col-span-8 ">
+    <h1 class=" text-black font-bold text-center">Ocio</h1>
+    <div class="m-3 col-span-2 bg-red-200 rounded">
+      <h1 class="pl-4 text-black font-bold text-xs  text-red-800">Cena -60€</h1>
+    </div>
+  </div>
+  <canvas id="barChartCicle" class="col-span-8 row-span-1"></canvas>
+  <div class="col-span-8 flex items-center justify-center">
+    <h1 class=" text-black font-bold  text-green-600 text-center ">Total: 1000€</h1>
+  </div>
+  </div>
+</section>

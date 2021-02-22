@@ -1,0 +1,33 @@
+<app-my-header title={{titulo}}></app-my-header>
+
+<div>
+
+  <div class="flex justify-center flex-col">
+    <h1 class="text-black text-center">{{meses[viewDate.getMonth()]+" "+viewDate.getFullYear()}}</h1>
+    <div class="flex  justify-between">
+
+    <div class="flex pb-2">
+      <div class="bg-blue-400 p-2 rounded-l " mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate">
+        Anterior
+      </div>
+      <div class="bg-blue-100 p-2 text-gray-500" mwlCalendarToday [(viewDate)]="viewDate">
+        Actual
+      </div>
+      <div class="bg-blue-400 p-2 rounded-r" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate">
+        Próximo
+      </div>
+    </div>
+    <div class="flex pb-2 " button  (click)="presentAlertPrompt()">
+        <ion-icon  class=" bg-blue-400 p-2 rounded w-8 h-8" name="add-circle-outline" ></ion-icon>
+    </div>
+    </div>
+
+  </div>
+
+</div>
+<div >
+
+  <mwl-calendar-month-view  class="text-black uppercase"  [locale]="locale" [viewDate]="viewDate" [events] = " events " (dayClicked) = "dayClicked($event.day)">
+  </mwl-calendar-month-view>
+</div>
+

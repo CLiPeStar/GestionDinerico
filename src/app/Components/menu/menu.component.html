@@ -1,0 +1,32 @@
+<ion-menu side="end" type="push" contentId="main">
+  <div class="container min-w-full min-h-full">
+    <div class="difusor min-w-full h-full flex justify-center items-center">
+      <ul>
+        <li (click)="toggleMenu()" routerLink="../../home" class=" flex rounded p-2 mt-3 ml-5 bg-blue-400 text-center text-xl">
+          <ion-icon class="w-6 h-6 mr-3" name="card-outline"></ion-icon>
+          Fondos
+        </li>
+        <li (click)="toggleMenu()" routerLink="../../balances" class=" flex rounded p-2 mt-3 ml-5 bg-blue-400 text-center text-xl">
+          <ion-icon class="w-6 h-6 mr-3" name="stats-chart-outline"></ion-icon>
+          Balances
+        </li>
+        <li  (click)="toggleMenu()" routerLink="../../recordatorios"class=" flex rounded p-2 mt-3 ml-5 bg-blue-400 text-center text-xl">
+          <ion-icon class="w-6 h-6 mr-3" name="calendar-outline"></ion-icon>
+          Recordatorios
+        </li>
+        <li (click)="toggleMenu()" routerLink="../../buscar" class=" flex rounded p-2 mt-3 ml-5 bg-blue-400 text-center text-xl">
+          <ion-icon class="w-6 h-6 mr-3" name="search-outline"></ion-icon>
+          Buscar
+        </li>
+        <li (click)="toggleMenu()" routerLink="../../anotaciones" class=" flex rounded p-2 mt-3 ml-5 bg-blue-400 text-center text-xl">
+          <ion-icon class="w-6 h-6 mr-3" name="bookmarks-outline"></ion-icon>
+          Anotaciones
+        </li>
+      </ul>
+      <li  (click)="toggleMenu()" routerLink="../../cuenta" class="cuenta flex rounded p-2 mt-3 ml-5 bg-blue-500 text-center text-xl">
+        <ion-icon class="w-6 h-6 mr-3" name="person-circle-outline"></ion-icon>
+        Cuenta
+      </li>
+    </div>
+  </div>
+</ion-menu>

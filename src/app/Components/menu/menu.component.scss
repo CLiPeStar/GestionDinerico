@@ -1,0 +1,17 @@
+.container {
+  background-image: url("../../../assets/imgs/FondoMenu.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.difusor {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(107, 107, 107, 0.842);
+  backdrop-filter: blur(4px);
+  height: 100%;
+}
+.cuenta{
+  position: absolute;
+  bottom:2em;
+  left: 0em;
+}

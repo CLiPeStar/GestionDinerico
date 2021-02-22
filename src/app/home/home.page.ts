@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {MenuController} from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +8,16 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  // tslint:disable-next-line:variable-name
+  private _fecha: string;
+
+  constructor() {
+    this._fecha = new Date().toLocaleDateString();
+  }
+
+  get fecha(): string {
+    return this._fecha;
+  }
+
 
 }
