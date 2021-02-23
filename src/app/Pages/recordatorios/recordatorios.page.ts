@@ -39,7 +39,6 @@ export class RecordatoriosPage implements OnInit {
 
   ngOnInit() {
 
-
   }
 
   async dayClicked({date, events}: { date: Date; events: CalendarEvent[] }) {
@@ -68,7 +67,7 @@ export class RecordatoriosPage implements OnInit {
   async presentAlertPrompt() {
     const alerta = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Prompt!',
+      header: 'Añadir recordatorio',
       inputs: [
         {
           name: 'fecha',

@@ -1,5 +1,16 @@
 <app-my-header title={{titulo}}></app-my-header>
 
 <ion-content>
+  <div class="flex justify-center pr-2 pl-2 flex-row" *ngFor="let item of arrayAnotaciones">
+    <div class="bg-gray-400 min-w-full pt-1 pb-1 m-3 flex  items-center rounded ">
+      <h3 class="ml-3">{{item.name}}</h3>
+      <div class="w-8 h-8 rounded absolute right-8" style="background:{{item.color}}"></div>
+    </div>
 
+  </div>
+  <div class="flex justify-center pr-2 pl-2 flex-row" (click)="anadirNuevaAnotacion()">
+    <div class="bg-gray-600 min-w-full pt-1 pb-1 m-3 flex  items-center rounded ">
+      <ion-icon  class="min-w-full text-center w-8 h-8" name="add-circle-outline"></ion-icon>
+    </div>
+  </div>
 </ion-content>

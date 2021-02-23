@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {MenuController} from '@ionic/angular';
+import {MenuController, NavController} from '@ionic/angular';
+import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -8,14 +9,19 @@ import {MenuController} from '@ionic/angular';
 })
 export class MenuComponent implements OnInit {
 
-  constructor(private menuCtrl: MenuController) {
+  constructor(private menuCtrl: MenuController, private router: Router, public act: ActivatedRoute, private navCtrl: NavController) {
   }
 
   ngOnInit() {
+
   }
 
-  toggleMenu() {
-    this.menuCtrl.toggle();
 
+  routerMe(nameRoute: string) {
+    this.menuCtrl.toggle();
+    const extrasDeNavegcacion: NavigationExtras = {
+      state: {}
+    };
+    this.router.navigate([nameRoute], extrasDeNavegcacion);
   }
 }

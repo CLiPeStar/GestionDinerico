@@ -8,11 +8,16 @@ import {Component, OnInit} from '@angular/core';
 export class OperacionesHistoricPage implements OnInit {
   // tslint:disable-next-line:variable-name
   private _tituloFondo = 'Mes';
+  private _id: number = 1;
 
   constructor() {
   }
 
   ngOnInit() {
+  }
+
+  get id(): number {
+    return this._id;
   }
 
   get tituloFondo(): string {

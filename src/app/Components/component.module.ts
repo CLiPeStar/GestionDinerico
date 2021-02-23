@@ -7,6 +7,8 @@ import {MyHeaderComponent} from './my-header/my-header.component';
 import {RouterModule} from '@angular/router';
 import {FooterOperationComponent} from './footer-operation/footer-operation.component';
 import {CardHistoricComponent} from './card-historic/card-historic.component';
+import {FormRegisterComponent} from './form-register/form-register.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -16,6 +18,7 @@ import {CardHistoricComponent} from './card-historic/card-historic.component';
     MyHeaderComponent,
     FooterOperationComponent,
     CardHistoricComponent,
+    FormRegisterComponent,
 
   ],
   exports: [
@@ -24,11 +27,13 @@ import {CardHistoricComponent} from './card-historic/card-historic.component';
     MyHeaderComponent,
     FooterOperationComponent,
     CardHistoricComponent,
+    FormRegisterComponent
   ],
   imports: [
     CommonModule,
     IonicModule,
     RouterModule,
+    ReactiveFormsModule,
   ]
 })
 export class ComponentModule {
