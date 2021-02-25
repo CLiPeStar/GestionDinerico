@@ -1,27 +1,63 @@
 <app-my-header title={{titulo}}></app-my-header>
 
 <ion-content>
-  <ion-segment class="bg-gray-500 rounded " (ionChange)="segmentChanged($event)" [(ngModel)]="page">
+  <ion-segment class="bg-gray-500 rounded " (ionChange)="segmentChanged()" [(ngModel)]="page">
     <ion-segment-button value="Ingresos">
       <ion-label class="font-bold">Ingreso</ion-label>
     </ion-segment-button>
     <ion-segment-button value="Gastos">
-    <ion-label class="font-bold">Gasto</ion-label>
-  </ion-segment-button>
+      <ion-label class="font-bold">Gasto</ion-label>
+    </ion-segment-button>
     <ion-segment-button value="Ingresos y Gastos">
       <ion-label class="font-bold">Todo</ion-label>
     </ion-segment-button>
   </ion-segment>
-<div class="min-w-full flex flex-col ">
-  <div class="flex justify-center">
+  <div class="min-w-full flex flex-col ">
+    <div class="flex justify-center">
 
-  <h1 class="text-black">Buscar en: </h1>
-  <h1 class="font-bold text-black pl-1">{{page}}</h1>
+      <h3 class="text-black">Buscar en: </h3>
+      <h3 class="font-bold text-black pl-1">{{page}}</h3>
+    </div>
+
+    <main class="p-4 min-h-full flex justify-center flex-col">
+      <form [formGroup]="formGroup">
+        <ion-item class="rounded ">
+          <ion-label class="pr-2">Cuantia:</ion-label>
+          <ion-input class="rounded text-center bg-black text-white" formControlName=monto [(ngModel)]="monto"
+                     type="number" min="0" placeholder="0"></ion-input>
+        </ion-item>
+        <ion-item class="rounded pt-3">
+          <ion-select formControlName=anotacion [(ngModel)]="anotacion" class="rounded text-center"
+                       placeholder="Todas las anotaciones">
+            <ion-select-option *ngFor="let item of arrayAnotaciones" value={{item.id}}>{{item.name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item class="rounded pt-3">
+          <ion-select formControlName=fondo [(ngModel)]="fondo" class="rounded text-center" placeholder="Todos los fondos">
+            <ion-select-option *ngFor="let item of arrayFondos" value={{item.id}}>{{item.name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item class="rounded pt-3 ">
+          <ion-label class="pr-2">Inicio:</ion-label>
+          <ion-input class="rounded text-center bg-black text-white" formControlName=fechaInicio [(ngModel)]="fechaInicio"
+                     type="date"  ></ion-input>
+        </ion-item>
+        <ion-item class="rounded pt-3">
+        <ion-label class="pr-2">Final:</ion-label>
+        <ion-input class="rounded text-center bg-black text-white"  formControlName=fechaFinal [(ngModel)]="fechaFinal"
+                   type="date"  ></ion-input>
+      </ion-item>
+
+      </form>
+
+      <div >
+        <div class="ion-text-center pt-8" (click)="procesarForm()">
+          <ion-icon class="p-4 w-8 h-8 text-black bg-blue-400 rounded-full " name="search-outline"></ion-icon>
+        </div>
+      </div>
+
+    </main>
   </div>
-
-  <app-form-register ></app-form-register>
-</div>
-
 
 
 </ion-content>
