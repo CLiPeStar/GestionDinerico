@@ -1,0 +1,15 @@
+.avatar-image {
+background: #2a2a2a;
+}
+.box{
+  padding: 1rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(107, 107, 107, 0.842);
+  backdrop-filter: blur(4px);
+
+
+}
+.contain{
+  --background: linear-gradient(16deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 35%, rgba(0,172,255,1) 100%);;
+}
