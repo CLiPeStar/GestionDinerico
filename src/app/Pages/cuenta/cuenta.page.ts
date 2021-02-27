@@ -8,7 +8,9 @@ import {Chart} from 'chart.js';
 })
 export class CuentaPage implements OnInit {
   private _titulo: string = 'Cuenta';
+  public chart: any = null;
   @ViewChild('myChart') myDiv: ElementRef;
+
   constructor() {
   }
 
@@ -18,12 +20,13 @@ export class CuentaPage implements OnInit {
 
 
   generateCharts() {
-    const myChart = new Chart(this.myDiv, {
+    this.chart = new Chart('realtime', {
       type: 'bar',
       data: {
-        labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
+          'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
         datasets: [{
-       //   label: '',
+          //   label: '',
           data: [12, 19, 3, 5, 2, 3, 5, 2, 3, 5, 2, 3],
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
