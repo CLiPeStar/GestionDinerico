@@ -1,4 +1,7 @@
 import {Component, OnInit} from '@angular/core';
+import {Anotaciones} from '../../Core/Class/Anotaciones';
+import {AnotacionesService} from '../../Core/Services/Anotaciones/anotaciones.service';
+import {AlertController} from '@ionic/angular';
 
 @Component({
   selector: 'app-anotaciones',
@@ -7,18 +10,52 @@ import {Component, OnInit} from '@angular/core';
 })
 export class AnotacionesPage implements OnInit {
   private _titulo: string = 'Anotaciones';
+  private arrayAnotaciones: Anotaciones[] = [];
 
 
-  arrayAnotaciones = [{name: 'Agua', color: '#8ac4d0'}, {name: 'Luz', color: '#f4d160'}, {name: 'Juegos', color: '#4a47a3'}];
-
-  constructor() {
+  constructor(private anotacionesService: AnotacionesService, private alertController: AlertController) {
   }
 
   ngOnInit() {
+    this.arrayAnotaciones = this.anotacionesService.Anotaciones;
   }
 
-  anadirNuevaAnotacion() {
-    alert('New Anotacion');
+  async anadirNuevaAnotacion() {
+
+    const alerta = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Añadir anotacion',
+      inputs: [
+        {
+          name: 'Name',
+          type: 'text',
+          placeholder: 'Name',
+        },
+        {
+          name: 'Color',
+          // @ts-ignore
+          type: 'color',
+          value: '#025955'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+
+        }, {
+          text: 'Ok',
+          handler: (data) => {
+            const anotacion = new Anotaciones(data.Name, data.Color);
+            console.log(anotacion);
+            this.anotacionesService.insertNewAnotacion(anotacion);
+          }
+        }
+      ]
+    });
+    await alerta.present();
+
   }
 
   get titulo(): string {

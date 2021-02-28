@@ -4,7 +4,11 @@
       <ion-label class="pr-2">Cuantia: </ion-label>
       <ion-input class="rounded text-center bg-black text-white" formControlName=monto [(ngModel)]="monto" type="number" min="0" placeholder="0"></ion-input>
     </ion-item>
-    <ion-item class="rounded pt-3">
+    <ion-item class="rounded ">
+      <ion-label class="pr-2">Concepto: </ion-label>
+      <ion-input class="rounded text-center bg-black text-white" formControlName=concepto [(ngModel)]="concepto" type="text" min="0" placeholder="Concepto"></ion-input>
+    </ion-item>
+    <ion-item class="rounded pt-3" *ngIf="this.isSpend">
       <ion-select formControlName=anotacion [(ngModel)]="anotacion" class="rounded text-center" placeholder="Anotación" >
         <ion-select-option *ngFor="let item of arrayAnotaciones"  value={{item.id}}>{{item.name}}</ion-select-option>
       </ion-select>
@@ -14,6 +18,7 @@
         <ion-select-option *ngFor="let item of arrayFondos"  value={{item.id}}>{{item.name}}</ion-select-option>
       </ion-select>
     </ion-item>
+
   </form>
 <div *ngIf="validAll()">
 <div class="ion-text-right" (click)="procesarForm()">

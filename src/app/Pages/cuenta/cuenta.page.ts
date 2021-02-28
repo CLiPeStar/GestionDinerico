@@ -9,7 +9,6 @@ import {Chart} from 'chart.js';
 export class CuentaPage implements OnInit {
   private _titulo: string = 'Cuenta';
   public chart: any = null;
-  @ViewChild('myChart') myDiv: ElementRef;
 
   constructor() {
   }

@@ -1,5 +1,7 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {MenuController} from '@ionic/angular';
+import {FondosService} from '../../Core/Services/Fondos/fondos.service';
+import {Fondo} from '../../Core/Class/Fondo';
 
 @Component({
   selector: 'app-my-header',
@@ -13,8 +15,13 @@ export class MyHeaderComponent implements OnInit {
   @Input('menu') menu: boolean;
   // tslint:disable-next-line:no-input-rename
   @Input('state') state: boolean;
+  // tslint:disable-next-line:no-input-rename
+  @Input('idFondo') idFondo: number;
 
-  constructor(private menuCtrl: MenuController) {
+  private fondo: Fondo;
+
+  constructor(private menuCtrl: MenuController, private fondosServ: FondosService) {
+    this.fondo = this.fondosServ.fondosMap.get(2);
   }
 
   ngOnInit() {
@@ -25,4 +32,5 @@ export class MyHeaderComponent implements OnInit {
     this.menuCtrl.toggle();
 
   }
+
 }

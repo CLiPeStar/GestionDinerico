@@ -1,10 +1,10 @@
-<app-my-header [title]=tituloFondo [state]=true></app-my-header>
+<app-my-header [title]="tituloFondo" [state]="true"  [idFondo]="id" ></app-my-header>
 
 <ion-content>
-<app-card-historic></app-card-historic>
+<app-card-historic [idFondo]="id" ></app-card-historic>
 </ion-content>
 <ion-footer>
   <ion-toolbar>
-    <app-footer-operation [idFondo]=id ></app-footer-operation>
+    <app-footer-operation [idFondo]="id" ></app-footer-operation>
   </ion-toolbar>
 </ion-footer>

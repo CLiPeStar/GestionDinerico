@@ -1,6 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
+import {AnotacionesService} from '../../Core/Services/Anotaciones/anotaciones.service';
+import {FondosService} from '../../Core/Services/Fondos/fondos.service';
+import {Anotaciones} from '../../Core/Class/Anotaciones';
+import {Fondo} from '../../Core/Class/Fondo';
+import {OperacionSimplificada} from '../../Core/Class/OperacionSimplificada';
+import {OperacionesService} from '../../Core/Services/Operaciones/operaciones.service';
 
 @Component({
   selector: 'app-form-register',
@@ -9,19 +15,26 @@ import {Router} from '@angular/router';
 })
 export class FormRegisterComponent implements OnInit {
   private _formGroup: FormGroup;
+  private arrayAnotaciones: Anotaciones[];
+  private arrayFondos: Fondo[];
 
-  @Input('isSpend') isSpend: boolean;
 
+  // Variables
 
-  //Fase produccion
-  arrayAnotaciones = [{name: 'Agua', id: 1}, {name: 'Luz', id: 2}, {name: 'Juegos', id: 3}];
-  arrayFondos = [{name: 'Mes', id: 1}, {name: 'Ocio', id: 2}];
   monto: number;
-  anotacion: number;
   fondo: number;
+  // tslint:disable-next-line:no-input-rename
+  @Input('isSpend') isSpend: boolean;
+  idMes: number;
+  concepto: string;
+  anotacion: number;
 
-  constructor(private router: Router) {
+
+  constructor(private router: Router, private anotacionesServ: AnotacionesService, private fondosServ: FondosService, private operacionesServ: OperacionesService) {
     this.generateFormGroup();
+    this.arrayAnotaciones = this.anotacionesServ.Anotaciones;
+    this.arrayFondos = this.fondosServ.fondosArray;
+    this.idMes = this.fondosServ.dateNow;
   }
 
   ngOnInit() {
@@ -31,22 +44,42 @@ export class FormRegisterComponent implements OnInit {
     this._formGroup = new FormGroup({
       monto: new FormControl('', Validators.min(1)),
       anotacion: new FormControl('', Validators.required),
-      fondo: new FormControl('', Validators.required)
+      fondo: new FormControl('', Validators.required),
+      concepto: new FormControl('', Validators.required)
 
     });
   }
 
   validAll(): boolean {
+
+    if (this.isSpend) {
+
+      return this.formGroup.get('monto').dirty && this.formGroup.get('monto').valid
+        && this.formGroup.get('anotacion').dirty && this.formGroup.get('anotacion').dirty
+        && this.formGroup.get('fondo').dirty && this.formGroup.get('fondo').dirty
+        && this.formGroup.get('concepto').dirty && this.formGroup.get('concepto').dirty;
+    }
     return this.formGroup.get('monto').dirty && this.formGroup.get('monto').valid
-      && this.formGroup.get('anotacion').dirty && this.formGroup.get('anotacion').dirty
-      && this.formGroup.get('fondo').dirty && this.formGroup.get('fondo').dirty;
+      && this.formGroup.get('fondo').dirty && this.formGroup.get('fondo').dirty
+      && this.formGroup.get('concepto').dirty && this.formGroup.get('concepto').dirty;
+
   }
 
   procesarForm() {
+    let operacion;
+    this.anotacion ? operacion = new OperacionSimplificada(this.monto, this.fondo, this.isSpend, this.idMes, this.concepto, this.anotacion)
+      : operacion = new OperacionSimplificada(this.monto, this.fondo, this.isSpend, this.idMes, this.concepto);
+    this.operacionesServ.registerNewOperation(operacion)
+      .then((data) => {
+        this.fondosServ.actualizarSaldos(operacion)
+          .then((data2) => {
+            this.formGroup.reset();
+            //location.reload();
+            // this.router.navigate(['/home']);
+          });
+      })
+      .catch();
 
-    console.log(this.monto, this.anotacion, this.fondo, this.isSpend);
-    this.formGroup.reset();
-    this.router.navigate(['/home']);
 
   }
 

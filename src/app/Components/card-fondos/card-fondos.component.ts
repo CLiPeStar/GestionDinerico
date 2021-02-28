@@ -1,6 +1,9 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Chart} from 'chart.js';
 import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
+import {FondosService} from '../../Core/Services/Fondos/fondos.service';
+import {Fondo} from '../../Core/Class/Fondo';
+import {Anotaciones} from '../../Core/Class/Anotaciones';
 
 @Component({
   selector: 'app-card-fondos',
@@ -9,35 +12,40 @@ import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
 })
 export class CardFondosComponent implements OnInit {
 
-  private bars: any;
-  private doughnutChart: any;
+  private _fondosArray: Fondo[];
+  public doughnutChart: any = null;
 
-  constructor(private route: Router, public act: ActivatedRoute) {
+  constructor(private route: Router, public act: ActivatedRoute, private fondos: FondosService) {
+    this._fondosArray = [];
   }
 
   ngOnInit() {
-    this.ionViewDidEnter();
+    this._fondosArray = this.fondos.fondosArray;
+    setTimeout(() => {
+      this.ionViewDidEnter();
+    }, 1000);
+
   }
 
   ionViewDidEnter() {
-    this.createBarChart();
     this.doughnutChartMethod();
   }
 
-  doughnutChartMethod() {
-    this.doughnutChart = new Chart(document.getElementById('barChartCicle'), {
+  async doughnutChartMethod() {
+    const arrayName: Map<Anotaciones, number> = new Map<Anotaciones, number>();
+    const arrayDatos: number[] = [];
+    const arrayColor: string[] = [];
+    const arrayLabel: string[] = [];
+
+    this.doughnutChart = new Chart('charts', {
       type: 'doughnut',
       data: {
         labels: ['Salario'],
         datasets: [{
           label: '# of Votes',
-          data: [50, 29, 15, 10, 7],
+          data: [this.fondos.fondosMap.get(2).monto],
           backgroundColor: [
-            'rgba(255, 159, 64)',
-            'rgba(255, 99, 132)',
-            'rgba(54, 162, 235)',
-            'rgba(255, 206, 86)',
-            'rgba(75, 192, 192)'
+            '#025955',
           ]
 
         }]
@@ -45,26 +53,17 @@ export class CardFondosComponent implements OnInit {
     });
   }
 
-  createBarChart() {
-    this.bars = new Chart(document.getElementById('barChart'), {
-      type: 'doughnut',
-      data: {
-        labels: ['Salario'],
-        datasets: [{
-          label: 'Viewers in millions',
-          data: [1000],
-          backgroundColor: ['rgb(38, 194, 129)'],
-        }]
-      },
-      options: {}
-    });
-  }
 
-  public routerMe() {
+  public routerMe(item: Fondo) {
     const extrasDeNavegcacion: NavigationExtras = {
-      state: {
-      }
+      state: {}
     };
     this.route.navigate(['operaciones-historic'], extrasDeNavegcacion);
   }
+
+  get fondosArray(): Fondo[] {
+    return this._fondosArray;
+  }
+
+
 }

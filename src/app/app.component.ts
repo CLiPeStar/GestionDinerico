@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {DataAccesService} from './Core/Services/BBDD/data-acces.service';
+import {AnotacionesService} from './Core/Services/Anotaciones/anotaciones.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor() {}
+  constructor(private db: DataAccesService, private anot: AnotacionesService) {
+  }
 }

@@ -14,9 +14,9 @@ export class CopyDataBaseService {
       this.platform.ready()
         .then(() => {
           this.sqlDbCopy
-            .copy('Horario16e.db', 0)
+            .copy('EcoPers.db', 0)
             .then(() => {
-              alert('BD copiada con exito');
+              // alert('BD copiada con exito');
               resolve('BD copiada con exito');
             })
             .catch((error) => {
