@@ -14,10 +14,11 @@ export class AnotacionesPage implements OnInit {
 
 
   constructor(private anotacionesService: AnotacionesService, private alertController: AlertController) {
+    this.arrayAnotaciones = this.anotacionesService.Anotaciones;
   }
 
   ngOnInit() {
-    this.arrayAnotaciones = this.anotacionesService.Anotaciones;
+
   }
 
   async anadirNuevaAnotacion() {
@@ -49,7 +50,10 @@ export class AnotacionesPage implements OnInit {
           handler: (data) => {
             const anotacion = new Anotaciones(data.Name, data.Color);
             console.log(anotacion);
-            this.anotacionesService.insertNewAnotacion(anotacion);
+            this.anotacionesService.insertNewAnotacion(anotacion).then(() => {
+                this.arrayAnotaciones = this.anotacionesService.Anotaciones;
+              }
+            );
           }
         }
       ]

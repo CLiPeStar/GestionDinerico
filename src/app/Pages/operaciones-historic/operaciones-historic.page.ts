@@ -7,7 +7,7 @@ import {Component, OnInit} from '@angular/core';
 })
 export class OperacionesHistoricPage implements OnInit {
   private _tituloFondo = 'Mes';
-  id: number = 2;
+  id: number = 3;
 
   constructor() {
   }

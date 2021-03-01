@@ -12,11 +12,10 @@ import {Anotaciones} from '../../Core/Class/Anotaciones';
 })
 export class CardFondosComponent implements OnInit {
 
-  private _fondosArray: Fondo[];
+  private _fondosArray: Fondo[] = [];
   public doughnutChart: any = null;
 
   constructor(private route: Router, public act: ActivatedRoute, private fondos: FondosService) {
-    this._fondosArray = [];
   }
 
   ngOnInit() {
@@ -32,21 +31,38 @@ export class CardFondosComponent implements OnInit {
   }
 
   async doughnutChartMethod() {
-    const arrayName: Map<Anotaciones, number> = new Map<Anotaciones, number>();
+    const mapAnMo: Map<Anotaciones, number> = new Map<Anotaciones, number>();
+    this.fondos.fondosArray.forEach((e) => {
+      e.arrayOperaciones.forEach((x) => {
+        if (!mapAnMo.get(x.anotacion)) {
+          mapAnMo.set(x.anotacion, x.monto);
+        } else {
+          mapAnMo.set(x.anotacion, (mapAnMo.get(x.anotacion) + x.monto));
+        }
+      });
+    });
+
     const arrayDatos: number[] = [];
     const arrayColor: string[] = [];
     const arrayLabel: string[] = [];
-
+    // tslint:disable-next-line:forin
+    for (const key of mapAnMo) {
+      arrayLabel.push(key[0].name);
+      arrayColor.push(key[0].color);
+      arrayDatos.push(key[1]);
+    }
+    arrayDatos.push(this.fondos.fondosMap.get(3).monto);
+    arrayColor.push('#025955');
+    arrayLabel.push('Salario');
+    console.log(arrayColor);
     this.doughnutChart = new Chart('charts', {
       type: 'doughnut',
       data: {
-        labels: ['Salario'],
+        labels: arrayLabel,
         datasets: [{
           label: '# of Votes',
-          data: [this.fondos.fondosMap.get(2).monto],
-          backgroundColor: [
-            '#025955',
-          ]
+          data: arrayDatos,
+          backgroundColor: arrayColor
 
         }]
       }

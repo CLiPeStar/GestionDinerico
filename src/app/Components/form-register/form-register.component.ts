@@ -23,14 +23,19 @@ export class FormRegisterComponent implements OnInit {
 
   monto: number;
   fondo: number;
-  // tslint:disable-next-line:no-input-rename
-  @Input('isSpend') isSpend: boolean;
+  @Input() isSpend: boolean;
   idMes: number;
   concepto: string;
   anotacion: number;
 
 
-  constructor(private router: Router, private anotacionesServ: AnotacionesService, private fondosServ: FondosService, private operacionesServ: OperacionesService) {
+  constructor(private router: Router, private anotacionesServ: AnotacionesService, private fondosServ: FondosService,
+              private operacionesServ: OperacionesService) {
+    this.fondo = null;
+    this.monto = null;
+    this.idMes = null;
+    this.concepto = null;
+    this.anotacion = null;
     this.generateFormGroup();
     this.arrayAnotaciones = this.anotacionesServ.Anotaciones;
     this.arrayFondos = this.fondosServ.fondosArray;
@@ -74,7 +79,7 @@ export class FormRegisterComponent implements OnInit {
         this.fondosServ.actualizarSaldos(operacion)
           .then((data2) => {
             this.formGroup.reset();
-            //location.reload();
+            this.router.navigate(['/home']).then(r => location.reload());
             // this.router.navigate(['/home']);
           });
       })

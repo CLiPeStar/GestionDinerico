@@ -9,15 +9,15 @@ import {Operacion} from '../../Core/Class/Operacion';
 })
 export class CardHistoricComponent implements OnInit {
   // tslint:disable-next-line:no-input-rename
-  @Input('idFondo') idFondo: number;
+  @Input() idFondo: number;
 
-  private _arraysOperation: Operacion[];
+  private _arraysOperation: Operacion[] = [];
 
   constructor(private fondoServ: FondosService) {
-    this._arraysOperation = this.fondoServ.fondosMap.get(2).arrayOperaciones;
   }
 
   ngOnInit() {
+    this._arraysOperation = this.fondoServ.fondosMap.get(this.idFondo).arrayOperaciones;
     setTimeout(() => {
       const coll = document.getElementsByClassName('collapsible');
       let i;

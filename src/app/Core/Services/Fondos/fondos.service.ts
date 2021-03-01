@@ -18,7 +18,6 @@ export class FondosService {
   private lastOp: Operacion;
 
   constructor(private db: DataAccesService, private operacionesService: OperacionesService, private anotacioneservice: AnotacionesService) {
-
     this._fondosArray = [];
     this._fondosMap = new Map<number, Fondo>();
     this.generateIdMonth();
@@ -26,35 +25,41 @@ export class FondosService {
   }
 
   private generateData() {
-    this.db.GetLastOp(this._dateNow)
-      .then((lastOp) => {
-        lastOp.forEach((x) => {
-          const anot = this.anotacioneservice.anotacionesMap.get(x.anotacionId);
-          const operacion: Operacion = new Operacion(x.id, x.concepto, x.monto, anot, x.fechaOperacion, x.isSpend);
-          this.lastOp = operacion;
-        })
-        ;
 
-        this.db.getFondoByIdMes(this._dateNow)
-          .then((data) => {
-            data.forEach((e) => {
-              let arrayOp: Operacion[] = [];
-              if (this.operacionesService.operaciones.get(e.id)) {
-                arrayOp = this.operacionesService.operaciones.get(e.id).get(e.idMes);
-              }
-
-              const fondo = new Fondo(e.name, e.fondo, e.idMes, arrayOp, e.gastado, this.lastOp, e.id);
-              this._fondosMap.set(fondo.id, fondo);
-              this._fondosArray.push(fondo);
-            });
+    return new Promise<void>((resolve, reject) => {
+      this.db.GetLastOp(this._dateNow)
+        .then((lastOp) => {
+          lastOp.forEach((x) => {
+            const anot = this.anotacioneservice.anotacionesMap.get(x.anotacionId);
+            const operacion: Operacion = new Operacion(x.id, x.concepto, x.monto, anot, x.fechaOperacion, x.isSpend);
+            this.lastOp = operacion;
           })
-          .catch((err) => {
-            console.log('Fondos services 37:' + err);
-          });
-      })
-      .catch((err) => {
-        console.log('Fondos services 41:' + err);
-      });
+          ;
+
+          this.db.getFondoByIdMes(this._dateNow)
+            .then((data) => {
+
+              data.forEach((e) => {
+                let arrayOp: Operacion[] = [];
+                if (this.operacionesService.operaciones.get(e.id)) {
+                  arrayOp = this.operacionesService.operaciones.get(e.id).get(e.idMes);
+                }
+
+                const fondo = new Fondo(e.name, e.fondo, e.idMes, arrayOp, e.gastado, this.lastOp, e.id);
+                this._fondosMap.set(fondo.id, fondo);
+                this._fondosArray.push(fondo);
+              });
+              resolve();
+            })
+            .catch((err) => {
+              console.log('Fondos services 52:' + err);
+            });
+        })
+        .catch((err) => {
+          console.log('Fondos services 56:' + err);
+        });
+    });
+
 
   }
 
@@ -69,7 +74,7 @@ export class FondosService {
   }
 
   actualizarSaldos(ope: OperacionSimplificada) {
-    const fondo = this.fondosMap.get(2);
+    const fondo = this.fondosMap.get(+ope.fondo);
     let monto = 0;
     let gastado = 0;
     if (ope.isSpend) {
@@ -80,11 +85,12 @@ export class FondosService {
       gastado = fondo.gastado;
 
     }
-
+    this._fondosArray = [];
+    this._fondosMap = new Map<number, Fondo>();
     return new Promise<Array<any>>((resolve, reject) => {
       this.db.UpdateDataFondo(monto, gastado, fondo.id, fondo.idMes)
         .then((data) => {
-            resolve(data);
+            this.generateData().then(() => resolve());
           }
         )
         .catch((err) => {

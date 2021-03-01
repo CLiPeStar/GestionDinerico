@@ -1,9 +1,9 @@
 <section class="flex min-w-full min-h-full  flex-col items-center">
 
-  <div *ngFor="let item of this.fondosArray" (click)="routerMe(item)"
+  <div *ngFor="let item of this.fondosArray"
        class="cursor-pointer mt-4 container rounded border-2 flex grid grid-rows-3 grid-cols-8">
 
-    <div class="m-3 rounded bg-blue-200 col-span-8 ">
+    <div class="m-3 rounded bg-blue-200 col-span-8 " (click)="routerMe(item)">
       <h1 class=" text-black font-bold text-center capitalize">{{item.name}}</h1>
       <div *ngIf="item.ultimaOp&&item.ultimaOp.isSpend" class="m-3 col-span-2 bg-red-200 rounded">
         <h1 class="pl-4 text-black font-bold text-xs text-red-800">{{item.ultimaOp.anotacion.name}}
@@ -16,7 +16,7 @@
     </div>
     <canvas id="charts" class="col-span-8 row-span-1">{{doughnutChart}}</canvas>
 
-    <div class="col-span-8 flex items-center justify-center">
+    <div class="col-span-8 flex items-center justify-center" (click)="routerMe(item)">
       <h1 class=" text-black font-bold  text-green-600 text-center ">Total: {{item.monto}}</h1>
     </div>
   </div>

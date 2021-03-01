@@ -10,28 +10,44 @@ export class AnotacionesService {
   private _anotacionesMap: Map<number, Anotaciones>;
 
   constructor(private dataBd: DataAccesService) {
-    this._AnotacionesArray = [];
-    this._anotacionesMap = new Map<number, Anotaciones>();
     this.generateData();
   }
 
   private generateData() {
-    this.dataBd.getAnotaciones()
-      .then((data) => {
-        data.forEach((e) => {
-          const anot: Anotaciones = new Anotaciones(e.name, e.color, e.id);
-          this._anotacionesMap.set(e.id, anot);
-          this._AnotacionesArray.push(anot);
+    return new Promise<any>((resolve, reject) => {
+      this.dataBd.getAnotaciones()
+        .then((data) => {
+          this._AnotacionesArray = [];
+          this._anotacionesMap = new Map<number, Anotaciones>();
+          data.forEach((e) => {
+            const IdIngreso: number = 3;
+            const anot: Anotaciones = new Anotaciones(e.name, e.color, e.id);
+            if (e.id !== IdIngreso) {
+
+              this._AnotacionesArray.push(anot);
+
+            }
+            this._anotacionesMap.set(e.id, anot);
+          });
+          resolve();
+        })
+        .catch((err) => {
+          console.log('Servicio anotaciones:', err);
+          reject(err);
         });
-      })
-      .catch((err) => {
-        console.log('Servicio anotaciones:', err);
-      });
+    });
+
   }
 
+
   public insertNewAnotacion(Anotacion: Anotaciones) {
-    this.dataBd.InsertAnotaciones(Anotacion);
-    this._AnotacionesArray.push(Anotacion);
+    return new Promise<void>((resolve, reject) => {
+      this.dataBd.InsertAnotaciones(Anotacion)
+        .then((data) => {
+          this.generateData().then(() => resolve());
+        })
+        .catch((err) => reject(err));
+    });
 
   }
 

@@ -9,23 +9,18 @@ import {Fondo} from '../../Core/Class/Fondo';
   styleUrls: ['./my-header.component.scss'],
 })
 export class MyHeaderComponent implements OnInit {
-  // tslint:disable-next-line:no-input-rename
-  @Input('title') title: string;
-  // tslint:disable-next-line:no-input-rename
-  @Input('menu') menu: boolean;
-  // tslint:disable-next-line:no-input-rename
-  @Input('state') state: boolean;
-  // tslint:disable-next-line:no-input-rename
-  @Input('idFondo') idFondo: number;
+  @Input() title: string;
+  @Input() menu: boolean;
+  @Input() state: boolean;
+  @Input() idFondo: number;
 
-  private fondo: Fondo;
+  private fondo: Fondo = null;
 
   constructor(private menuCtrl: MenuController, private fondosServ: FondosService) {
-    this.fondo = this.fondosServ.fondosMap.get(2);
   }
 
   ngOnInit() {
-
+    this.fondo = this.fondosServ.fondosMap.get(this.idFondo);
   }
 
   toggleMenu() {
