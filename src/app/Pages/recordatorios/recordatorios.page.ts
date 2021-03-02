@@ -2,7 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {AlertController, Platform} from '@ionic/angular';
 
 import {CalendarEvent, CalendarView} from 'angular-calendar';
-import {startOfDay} from 'date-fns';
+import {parseISO, startOfDay} from 'date-fns';
+import {FechaRecordatorio} from '../../Core/Class/FechaRecordatorio';
+import {RecordatorioService} from '../../Core/Services/Recordatorio/recordatorio.service';
 
 
 @Component({
@@ -21,19 +23,10 @@ export class RecordatoriosPage implements OnInit {
   view: CalendarView = CalendarView.Month;
 
 
-  events: CalendarEvent[] = [
-    {
-      start: startOfDay(new Date()),
-      title: 'First event',
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'Second event',
-    }
-  ];
+  events: CalendarEvent[] = [];
 
-  constructor(private  alertController: AlertController) {
-
+  constructor(private  alertController: AlertController, private RecordatoriosServices: RecordatorioService) {
+    this.events = this.RecordatoriosServices.arrayEvents;
   }
 
 
@@ -42,7 +35,6 @@ export class RecordatoriosPage implements OnInit {
   }
 
   async dayClicked({date, events}: { date: Date; events: CalendarEvent[] }) {
-    console.log(events);
     let mensaje = '';
     events.forEach(e => {
       mensaje += `<p class="text-bold text-white">- ${e.title}</p>`;
@@ -98,6 +90,14 @@ export class RecordatoriosPage implements OnInit {
         }, {
           text: 'Ok',
           handler: (data) => {
+
+            const fecha = new FechaRecordatorio(String(new Date(data.fecha)), data.concepto, data.monto);
+            this.RecordatoriosServices.addNewReminder(fecha)
+              .then(() => {
+                this.events = this.RecordatoriosServices.arrayEvents;
+
+              });
+
           }
         }
       ]

@@ -34,7 +34,8 @@ import {ReactiveFormsModule} from '@angular/forms';
     IonicModule,
     RouterModule,
     ReactiveFormsModule,
-  ]
+  ],
+  providers: [CardFondosComponent],
 })
 export class ComponentModule {
 }

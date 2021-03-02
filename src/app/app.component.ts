@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {DataAccesService} from './Core/Services/BBDD/data-acces.service';
 import {AnotacionesService} from './Core/Services/Anotaciones/anotaciones.service';
+import {RecordatorioService} from './Core/Services/Recordatorio/recordatorio.service';
+import {FondosService} from './Core/Services/Fondos/fondos.service';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +10,7 @@ import {AnotacionesService} from './Core/Services/Anotaciones/anotaciones.servic
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor(private db: DataAccesService, private anot: AnotacionesService) {
+  constructor(private db: DataAccesService, private anotacionesServicel: AnotacionesService,
+              private recordatoriosService: RecordatorioService, private fondosService: FondosService) {
   }
 }

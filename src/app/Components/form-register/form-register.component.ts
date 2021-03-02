@@ -7,6 +7,7 @@ import {Anotaciones} from '../../Core/Class/Anotaciones';
 import {Fondo} from '../../Core/Class/Fondo';
 import {OperacionSimplificada} from '../../Core/Class/OperacionSimplificada';
 import {OperacionesService} from '../../Core/Services/Operaciones/operaciones.service';
+import {CardFondosComponent} from '../card-fondos/card-fondos.component';
 
 @Component({
   selector: 'app-form-register',
@@ -30,7 +31,8 @@ export class FormRegisterComponent implements OnInit {
 
 
   constructor(private router: Router, private anotacionesServ: AnotacionesService, private fondosServ: FondosService,
-              private operacionesServ: OperacionesService) {
+              private operacionesServ: OperacionesService, private FondosComnponent: CardFondosComponent) {
+
     this.fondo = null;
     this.monto = null;
     this.idMes = null;
@@ -79,8 +81,9 @@ export class FormRegisterComponent implements OnInit {
         this.fondosServ.actualizarSaldos(operacion)
           .then((data2) => {
             this.formGroup.reset();
-            this.router.navigate(['/home']).then(r => location.reload());
-            // this.router.navigate(['/home']);
+            this.router.navigate(['/home']).then(() => {
+              this.FondosComnponent.ngOnInit();
+            });
           });
       })
       .catch();

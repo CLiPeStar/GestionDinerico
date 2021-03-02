@@ -16,6 +16,7 @@ import {CopyDataBaseService} from './Core/Services/copyBBDD/copy-data-base.servi
 import {DataAccesService} from './Core/Services/BBDD/data-acces.service';
 import {OperacionesService} from './Core/Services/Operaciones/operaciones.service';
 import {FondosService} from './Core/Services/Fondos/fondos.service';
+import {RecordatorioService} from './Core/Services/Recordatorio/recordatorio.service';
 
 registerLocaleData(localeEs);
 
@@ -25,9 +26,9 @@ registerLocaleData(localeEs);
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ComponentModule],
   providers: [
-    CopyDataBaseService, DataAccesService, AnotacionesService, OperacionesService, FondosService,
+    CopyDataBaseService, DataAccesService, AnotacionesService, OperacionesService, RecordatorioService,
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
-    SqliteDbCopy, SQLite, AnotacionesService],
+    SqliteDbCopy, SQLite, FondosService],
   // ],
   bootstrap: [AppComponent],
 })

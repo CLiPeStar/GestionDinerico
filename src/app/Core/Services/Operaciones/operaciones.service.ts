@@ -12,40 +12,45 @@ export class OperacionesService {
   private _dateNow: number;
 
   constructor(private db: DataAccesService, private anotacioneservice: AnotacionesService) {
-    this._operaciones = new Map<number, Map<number, Operacion[]>>();
     this.generateIdMonth();
     this.generateData();
   }
 
   private generateData() {
-    this.db.getHistoricoOperacionesByIdMes(this._dateNow)
-      .then((data) => {
-        data.forEach((e) => {
-          const anot = this.anotacioneservice.anotacionesMap.get(e.anotacionId);
-          const operacion: Operacion = new Operacion(e.id, e.concepto, e.monto, anot, e.fechaOperacion, e.isSpend);
+    this._operaciones = new Map<number, Map<number, Operacion[]>>();
+    return new Promise<void>((resolve, reject) => {
+      this.db.getHistoricoOperacionesByIdMes(this._dateNow)
+        .then((data) => {
+          data.forEach((e) => {
+            const anot = this.anotacioneservice.anotacionesMap.get(e.anotacionId);
+            const operacion: Operacion = new Operacion(e.id, e.concepto, e.monto, anot, e.fechaOperacion, e.isSpend);
 
-          let arrayObjetos: Map<number, Operacion[]>;
-          let array: Operacion[];
-          if (this._operaciones.get(e.fondoId)) {
+            let arrayObjetos: Map<number, Operacion[]>;
+            let array: Operacion[];
+            if (this._operaciones.get(e.fondoId)) {
 
-            arrayObjetos = this._operaciones.get(e.fondoId);
-            array = arrayObjetos.get(e.idMes);
-            array.push(operacion);
-            arrayObjetos.set(e.idMes, array);
-          } else {
-            arrayObjetos = new Map<number, Operacion[]>();
-            array = [];
-            array.push(operacion);
-            arrayObjetos.set(e.idMes, array);
-          }
+              arrayObjetos = this._operaciones.get(e.fondoId);
+              array = arrayObjetos.get(e.idMes);
+              array.push(operacion);
+              arrayObjetos.set(e.idMes, array);
+            } else {
+              arrayObjetos = new Map<number, Operacion[]>();
+              array = [];
+              array.push(operacion);
+              arrayObjetos.set(e.idMes, array);
+            }
 
 
-          this._operaciones.set(e.fondoId, arrayObjetos);
+            this._operaciones.set(e.fondoId, arrayObjetos);
+          });
+          resolve();
+        })
+        .catch((err) => {
+          console.log('Servicio operaciones:' + err);
+          reject(err);
         });
-      })
-      .catch((err) => {
-        console.log('Servicio operaciones:' + err);
-      });
+    });
+
   }
 
   private generateIdMonth() {
@@ -62,7 +67,8 @@ export class OperacionesService {
     return new Promise<Array<any>>((resolve, reject) => {
       this.db.InsertOperation(operation)
         .then((data) => {
-            resolve(data);
+            this.generateData().then(() => resolve(data));
+
           }
         )
         .catch((err) => {

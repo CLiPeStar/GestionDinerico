@@ -6,6 +6,7 @@ import {SQLiteObject} from '@ionic-native/sqlite/ngx';
 import {Request} from '../../Class/Request';
 import {Anotaciones} from '../../Class/Anotaciones';
 import {OperacionSimplificada} from '../../Class/OperacionSimplificada';
+import {FechaRecordatorio} from '../../Class/FechaRecordatorio';
 
 @Injectable({
   providedIn: 'root'
@@ -124,6 +125,42 @@ export class DataAccesService {
 
   getAnotaciones() {
     const sql = `SELECT * FROM anotaciones WHERE 1`;
+    const searchParams = [];
+    const request: Request = new Request(sql, searchParams);
+
+    return new Promise<Array<any>>((resolve, reject) => {
+      this.executeSentence(request)
+        .then((data) => resolve(data))
+        .catch((e) => reject(e));
+    });
+  }
+
+  getRecordatorios() {
+    const sql = `SELECT * from recordatorio `;
+    const searchParams = [];
+    const request: Request = new Request(sql, searchParams);
+
+    return new Promise<Array<any>>((resolve, reject) => {
+      this.executeSentence(request)
+        .then((data) => resolve(data))
+        .catch((e) => reject(e));
+    });
+  }
+
+  addNewReminder(fecha: FechaRecordatorio) {
+    console.log(fecha);
+    const sql = `INSERT INTO recordatorio (
+                             concepto,
+                             fechaAviso,
+                             monto
+                         )
+                         VALUES (
+                             '${fecha.concepto}',
+                             '${fecha.fecha}',
+                             ${fecha.monto}
+                         );
+`;
+    console.log(sql);
     const searchParams = [];
     const request: Request = new Request(sql, searchParams);
 

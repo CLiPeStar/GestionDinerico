@@ -18,13 +18,14 @@ export class FondosService {
   private lastOp: Operacion;
 
   constructor(private db: DataAccesService, private operacionesService: OperacionesService, private anotacioneservice: AnotacionesService) {
-    this._fondosArray = [];
-    this._fondosMap = new Map<number, Fondo>();
+
     this.generateIdMonth();
     this.generateData();
   }
 
   private generateData() {
+    this._fondosArray = [];
+    this._fondosMap = new Map<number, Fondo>();
 
     return new Promise<void>((resolve, reject) => {
       this.db.GetLastOp(this._dateNow)
@@ -85,8 +86,7 @@ export class FondosService {
       gastado = fondo.gastado;
 
     }
-    this._fondosArray = [];
-    this._fondosMap = new Map<number, Fondo>();
+
     return new Promise<Array<any>>((resolve, reject) => {
       this.db.UpdateDataFondo(monto, gastado, fondo.id, fondo.idMes)
         .then((data) => {

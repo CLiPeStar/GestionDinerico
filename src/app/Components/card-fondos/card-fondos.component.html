@@ -1,6 +1,6 @@
 <section class="flex min-w-full min-h-full  flex-col items-center">
 
-  <div *ngFor="let item of this.fondosArray"
+  <div *ngFor="let item of fondosArray"
        class="cursor-pointer mt-4 container rounded border-2 flex grid grid-rows-3 grid-cols-8">
 
     <div class="m-3 rounded bg-blue-200 col-span-8 " (click)="routerMe(item)">
@@ -17,7 +17,8 @@
     <canvas id="charts" class="col-span-8 row-span-1">{{doughnutChart}}</canvas>
 
     <div class="col-span-8 flex items-center justify-center" (click)="routerMe(item)">
-      <h1 class=" text-black font-bold  text-green-600 text-center ">Total: {{item.monto}}</h1>
+      <h1 *ngIf="item.monto>0" class=" text-black font-bold  text-green-600 text-center ">Total: {{item.monto}}</h1>
+      <h1 *ngIf="item.monto<0" class=" text-black font-bold  text-red-600 text-center ">Total: {{item.monto}}</h1>
     </div>
   </div>
 

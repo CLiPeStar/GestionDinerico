@@ -16,6 +16,8 @@ export class CardFondosComponent implements OnInit {
   public doughnutChart: any = null;
 
   constructor(private route: Router, public act: ActivatedRoute, private fondos: FondosService) {
+    this._fondosArray = this.fondos.fondosArray;
+
   }
 
   ngOnInit() {
@@ -82,4 +84,7 @@ export class CardFondosComponent implements OnInit {
   }
 
 
+  set fondosArray(value: Fondo[]) {
+    this._fondosArray = value;
+  }
 }
