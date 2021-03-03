@@ -23,7 +23,7 @@ export class FondosService {
     this.generateData();
   }
 
-  private generateData() {
+   generateData() {
     this._fondosArray = [];
     this._fondosMap = new Map<number, Fondo>();
 

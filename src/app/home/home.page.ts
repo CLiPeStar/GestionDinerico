@@ -1,5 +1,10 @@
 import {Component} from '@angular/core';
 import {MenuController} from '@ionic/angular';
+import {AnotacionesService} from '../Core/Services/Anotaciones/anotaciones.service';
+import {RecordatorioService} from '../Core/Services/Recordatorio/recordatorio.service';
+import {FondosService} from '../Core/Services/Fondos/fondos.service';
+import {OperacionesService} from '../Core/Services/Operaciones/operaciones.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -8,15 +13,19 @@ import {MenuController} from '@ionic/angular';
 })
 export class HomePage {
 
-  // tslint:disable-next-line:variable-name
-  private _fecha: string;
 
-  constructor() {
-    this._fecha = new Date().toLocaleDateString();
-  }
-
-  get fecha(): string {
-    return this._fecha;
+  constructor(private anotacionesService: AnotacionesService, private operacionesService: OperacionesService,
+              private fondosService: FondosService, private router: Router) {
+    this.anotacionesService.generateData()
+      .then(() => {
+        this.operacionesService.generateData()
+          .then(() => {
+            this.fondosService.generateData()
+              .then(() => {
+                this.router.navigate(['/fondos']);
+              });
+          });
+      });
   }
 
 

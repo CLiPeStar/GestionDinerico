@@ -82,7 +82,7 @@ export class FormRegisterComponent implements OnInit {
           .then((data2) => {
             this.formGroup.reset();
             this.router.navigate(['/home']).then(() => {
-              this.FondosComnponent.ngOnInit();
+              location.reload();
             });
           });
       })

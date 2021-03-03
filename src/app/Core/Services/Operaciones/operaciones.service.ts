@@ -16,7 +16,7 @@ export class OperacionesService {
     this.generateData();
   }
 
-  private generateData() {
+   generateData() {
     this._operaciones = new Map<number, Map<number, Operacion[]>>();
     return new Promise<void>((resolve, reject) => {
       this.db.getHistoricoOperacionesByIdMes(this._dateNow)

@@ -15,7 +15,7 @@ export class RecordatorioService {
     this.generateData();
   }
 
-  private generateData() {
+   generateData() {
     this._arrayEvents = [];
     return new Promise<void>((resolve, reject) => {
       this.db.getRecordatorios()

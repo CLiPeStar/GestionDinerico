@@ -10,7 +10,6 @@ import {FondosService} from './Core/Services/Fondos/fondos.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor(private db: DataAccesService, private anotacionesServicel: AnotacionesService,
-              private recordatoriosService: RecordatorioService, private fondosService: FondosService) {
+  constructor() {
   }
 }

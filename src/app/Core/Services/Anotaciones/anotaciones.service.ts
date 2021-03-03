@@ -13,7 +13,7 @@ export class AnotacionesService {
     this.generateData();
   }
 
-  private generateData() {
+   generateData() {
     return new Promise<any>((resolve, reject) => {
       this.dataBd.getAnotaciones()
         .then((data) => {
