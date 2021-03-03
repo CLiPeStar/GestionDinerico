@@ -17,6 +17,7 @@ import {DataAccesService} from './Core/Services/BBDD/data-acces.service';
 import {OperacionesService} from './Core/Services/Operaciones/operaciones.service';
 import {FondosService} from './Core/Services/Fondos/fondos.service';
 import {RecordatorioService} from './Core/Services/Recordatorio/recordatorio.service';
+import {HomePage} from './home/home.page';
 
 registerLocaleData(localeEs);
 
@@ -26,9 +27,17 @@ registerLocaleData(localeEs);
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ComponentModule],
   providers: [
-    CopyDataBaseService, DataAccesService, AnotacionesService, OperacionesService, RecordatorioService,
+    HomePage,
+    CopyDataBaseService,
+    DataAccesService,
+    AnotacionesService,
+    OperacionesService,
+    RecordatorioService,
+    SqliteDbCopy,
+    SQLite,
+    FondosService,
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
-    SqliteDbCopy, SQLite, FondosService],
+  ],
   // ],
   bootstrap: [AppComponent],
 })

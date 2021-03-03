@@ -16,6 +16,10 @@ export class HomePage {
 
   constructor(private anotacionesService: AnotacionesService, private operacionesService: OperacionesService,
               private fondosService: FondosService, private router: Router) {
+    this.generateDatas();
+  }
+
+  generateDatas() {
     this.anotacionesService.generateData()
       .then(() => {
         this.operacionesService.generateData()
@@ -27,6 +31,5 @@ export class HomePage {
           });
       });
   }
-
 
 }

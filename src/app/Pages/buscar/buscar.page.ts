@@ -1,6 +1,13 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
+import {FondosService} from '../../Core/Services/Fondos/fondos.service';
+import {AnotacionesService} from '../../Core/Services/Anotaciones/anotaciones.service';
+import {Anotaciones} from '../../Core/Class/Anotaciones';
+import {Fondo} from '../../Core/Class/Fondo';
+import {BusquedaService} from '../../Core/Services/Busqueda/busqueda.service';
+import {FiltroBusqueda} from '../../Core/Class/FiltroBusqueda';
+import {Operacion} from '../../Core/Class/Operacion';
 
 @Component({
   selector: 'app-buscar',
@@ -8,22 +15,26 @@ import {Router} from '@angular/router';
   styleUrls: ['./buscar.page.scss'],
 })
 export class BuscarPage implements OnInit {
+  private _arraysOperation: Operacion[];
   private _titulo: string = 'Buscar';
   private _page: string = 'Gastos';
   private _formGroup: FormGroup;
   private _isSpend: boolean = true;
+  private _arrayAnotaciones: Anotaciones[];
+  private _arrayFondos: Fondo[];
 
 
   //Fase produccion
-  arrayAnotaciones = [{name: 'Agua', id: 1}, {name: 'Luz', id: 2}, {name: 'Juegos', id: 3}];
-  arrayFondos = [{name: 'Mes', id: 1}, {name: 'Ocio', id: 2}];
   monto: number = null;
   anotacion: number = null;
   fondo: number = null;
   fechaInicio: Date = null;
   fechaFinal: Date = null;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private fondosService: FondosService, private anotacionesService: AnotacionesService,
+              private busquedaService: BusquedaService) {
+    this._arrayFondos = this.fondosService.fondosArray;
+    this._arrayAnotaciones = this.anotacionesService.Anotaciones;
     this.generateFormGroup();
   }
 
@@ -41,8 +52,13 @@ export class BuscarPage implements OnInit {
   }
 
   procesarForm() {
-    console.log(this.monto, this.anotacion, this.fondo, this._isSpend, this.fechaFinal, this.fechaInicio);
-    this.formGroup.reset();
+    const busqueda = new FiltroBusqueda(this.monto, this.anotacion, this.fondo, this._isSpend, this.fechaInicio, this.fechaFinal);
+    this.busquedaService.generateDataBusqueda(busqueda).then((data) => {
+      console.log(data);
+      this._arraysOperation = data;
+      this.formGroup.reset();
+    });
+
   }
 
   segmentChanged() {
@@ -54,7 +70,20 @@ export class BuscarPage implements OnInit {
   }
 
 
-  //Getter and Setters
+  // Getter and Setters
+
+
+  get arraysOperation(): Operacion[] {
+    return this._arraysOperation;
+  }
+
+  get arrayAnotaciones(): Anotaciones[] {
+    return this._arrayAnotaciones;
+  }
+
+  get arrayFondos(): Fondo[] {
+    return this._arrayFondos;
+  }
 
   get formGroup(): FormGroup {
     return this._formGroup;

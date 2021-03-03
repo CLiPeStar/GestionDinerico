@@ -26,35 +26,52 @@
           <ion-input class="rounded text-center bg-black text-white" formControlName=monto [(ngModel)]="monto"
                      type="number" min="0" placeholder="0"></ion-input>
         </ion-item>
-        <ion-item class="rounded pt-3">
+        <ion-item *ngIf="page==='Gastos'" class="rounded pt-3">
           <ion-select formControlName=anotacion [(ngModel)]="anotacion" class="rounded text-center"
-                       placeholder="Todas las anotaciones">
+                      placeholder="Todas las anotaciones">
             <ion-select-option *ngFor="let item of arrayAnotaciones" value={{item.id}}>{{item.name}}</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item class="rounded pt-3">
-          <ion-select formControlName=fondo [(ngModel)]="fondo" class="rounded text-center" placeholder="Todos los fondos">
+          <ion-select formControlName=fondo [(ngModel)]="fondo" class="rounded text-center"
+                      placeholder="Todos los fondos">
             <ion-select-option *ngFor="let item of arrayFondos" value={{item.id}}>{{item.name}}</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item class="rounded pt-3 ">
           <ion-label class="pr-2">Inicio:</ion-label>
-          <ion-input class="rounded text-center bg-black text-white" formControlName=fechaInicio [(ngModel)]="fechaInicio"
-                     type="date"  ></ion-input>
+          <ion-input class="rounded text-center bg-black text-white" formControlName=fechaInicio
+                     [(ngModel)]="fechaInicio"
+                     type="date"></ion-input>
         </ion-item>
         <ion-item class="rounded pt-3">
-        <ion-label class="pr-2">Final:</ion-label>
-        <ion-input class="rounded text-center bg-black text-white"  formControlName=fechaFinal [(ngModel)]="fechaFinal"
-                   type="date"  ></ion-input>
-      </ion-item>
+          <ion-label class="pr-2">Final:</ion-label>
+          <ion-input class="rounded text-center bg-black text-white" formControlName=fechaFinal [(ngModel)]="fechaFinal"
+                     type="date"></ion-input>
+        </ion-item>
 
       </form>
 
-      <div >
+      <div>
         <div class="ion-text-center pt-8" (click)="procesarForm()">
           <ion-icon class="p-4 w-8 h-8 text-black bg-blue-400 rounded-full " name="search-outline"></ion-icon>
         </div>
       </div>
+      <hr />
+      <div class="pt-4 min-w-full h-auto " *ngFor="let item of arraysOperation">
+        <button type="button" class="collapsible active bg-gray-200 shadow-md grid grid-cols-2" >
+          <p *ngIf="item.isSpend" class="col-span-1 ml-2 text-red-600">-{{item.monto}}€</p>
+          <p *ngIf="!item.isSpend" class="col-span-1 ml-2 text-green-600">+{{item.monto}}€</p>
+          <p class="col-span-1 text-center">{{item.anotacion.name}}</p>
+        </button>
+        <div class="content bg-gray-400" style="max-height: 200px">
+          <h1 class="text-black font-bold text-base">Concepto: <p class="text-base font-normal">{{item.concepto}}</p></h1>
+          <h1 class="text-black font-bold text-base">Fecha operación: <p
+            class="text-base font-normal">{{item.fechaOperacion}}</p>
+          </h1>
+        </div>
+      </div>
+
 
     </main>
   </div>

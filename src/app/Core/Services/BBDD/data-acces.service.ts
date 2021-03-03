@@ -7,6 +7,7 @@ import {Request} from '../../Class/Request';
 import {Anotaciones} from '../../Class/Anotaciones';
 import {OperacionSimplificada} from '../../Class/OperacionSimplificada';
 import {FechaRecordatorio} from '../../Class/FechaRecordatorio';
+import {FiltroBusqueda} from '../../Class/FiltroBusqueda';
 
 @Injectable({
   providedIn: 'root'
@@ -243,6 +244,25 @@ export class DataAccesService {
                                                     SELECT MAX(operaciones.fechaOperacion)
                                                     FROM operaciones
 )`;
+    const searchParams = [];
+    const request: Request = new Request(sql, searchParams);
+
+    return new Promise<Array<any>>((resolve, reject) => {
+      this.executeSentence(request)
+        .then((data) => resolve(data))
+        .catch((e) => reject(e));
+    });
+  }
+
+  FiltrarBusqueda(busqueda: FiltroBusqueda) {
+    const sql = `SELECT *
+  FROM operaciones WHERE
+  operaciones.isSpend = '${busqueda.isSpend}'
+  ${busqueda.fechaFin ? 'AND operaciones.fechaOperacion < ' + busqueda.fechaFin : 'AND operaciones.fechaOperacion'}
+  ${busqueda.fechaIni ? 'AND operaciones.fechaOperacion > ' + busqueda.fechaIni : 'AND operaciones.fechaOperacion'}
+  AND operaciones.monto ${busqueda.monto > 0 ? '=' + busqueda.monto : '> 0'}
+   ${busqueda.anotacionId ? 'AND operaciones.anotacionId =' + busqueda.anotacionId : 'AND operaciones.anotacionId '}`;
+    console.log(sql);
     const searchParams = [];
     const request: Request = new Request(sql, searchParams);
 

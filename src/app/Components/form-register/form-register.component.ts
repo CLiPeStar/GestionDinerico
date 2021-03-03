@@ -8,6 +8,7 @@ import {Fondo} from '../../Core/Class/Fondo';
 import {OperacionSimplificada} from '../../Core/Class/OperacionSimplificada';
 import {OperacionesService} from '../../Core/Services/Operaciones/operaciones.service';
 import {CardFondosComponent} from '../card-fondos/card-fondos.component';
+import {HomePage} from '../../home/home.page';
 
 @Component({
   selector: 'app-form-register',
@@ -31,7 +32,7 @@ export class FormRegisterComponent implements OnInit {
 
 
   constructor(private router: Router, private anotacionesServ: AnotacionesService, private fondosServ: FondosService,
-              private operacionesServ: OperacionesService, private FondosComnponent: CardFondosComponent) {
+              private operacionesServ: OperacionesService, private home: HomePage) {
 
     this.fondo = null;
     this.monto = null;
@@ -82,7 +83,7 @@ export class FormRegisterComponent implements OnInit {
           .then((data2) => {
             this.formGroup.reset();
             this.router.navigate(['/home']).then(() => {
-              location.reload();
+              this.home.generateDatas();
             });
           });
       })
