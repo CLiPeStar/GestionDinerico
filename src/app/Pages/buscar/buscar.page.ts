@@ -19,7 +19,7 @@ export class BuscarPage implements OnInit {
   private _titulo: string = 'Buscar';
   private _page: string = 'Gastos';
   private _formGroup: FormGroup;
-  private _isSpend: boolean = true;
+  private _isSpend: number = 1;
   private _arrayAnotaciones: Anotaciones[];
   private _arrayFondos: Fondo[];
 
@@ -62,10 +62,11 @@ export class BuscarPage implements OnInit {
   }
 
   segmentChanged() {
+    this._arraysOperation = [];
     this._page === 'Gastos' ?
-      this._isSpend = true :
+      this._isSpend = 1 :
       this._page === 'Ingresos' ?
-        this._isSpend = false :
+        this._isSpend = 0 :
         this._isSpend = null;
   }
 
@@ -97,11 +98,11 @@ export class BuscarPage implements OnInit {
     return this._page;
   }
 
-  get isSpend(): boolean {
+  get isSpend(): number {
     return this._isSpend;
   }
 
-  set isSpend(value: boolean) {
+  set isSpend(value: number) {
     this._isSpend = value;
   }
 

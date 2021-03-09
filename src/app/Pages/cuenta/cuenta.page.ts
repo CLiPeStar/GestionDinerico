@@ -25,8 +25,8 @@ export class CuentaPage implements OnInit {
         labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
           'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
         datasets: [{
-          //   label: '',
-          data: [12, 19, 3, 5, 2, 3, 5, 2, 3, 5, 2, 3],
+          label: 'Ahorro',
+          data: [0, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',

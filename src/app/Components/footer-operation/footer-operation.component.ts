@@ -9,6 +9,7 @@ import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
 export class FooterOperationComponent implements OnInit {
   // tslint:disable-next-line:no-input-rename
   @Input('idFondo') idFondo: number;
+
   constructor(private router: Router, public act: ActivatedRoute) {
 
   }
@@ -17,10 +18,6 @@ export class FooterOperationComponent implements OnInit {
   }
 
   routerMe(nameRoute: string) {
-    const extrasDeNavegcacion: NavigationExtras = {
-      state: {
-      }
-    };
-    this.router.navigate([nameRoute], extrasDeNavegcacion);
+    this.router.navigate([nameRoute]);
   }
 }

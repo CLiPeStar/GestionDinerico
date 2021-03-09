@@ -257,9 +257,9 @@ export class DataAccesService {
   FiltrarBusqueda(busqueda: FiltroBusqueda) {
     const sql = `SELECT *
   FROM operaciones WHERE
-  operaciones.isSpend = '${busqueda.isSpend}'
-  ${busqueda.fechaFin ? 'AND operaciones.fechaOperacion < ' + busqueda.fechaFin : 'AND operaciones.fechaOperacion'}
-  ${busqueda.fechaIni ? 'AND operaciones.fechaOperacion > ' + busqueda.fechaIni : 'AND operaciones.fechaOperacion'}
+  ${busqueda.isSpend != null ? 'operaciones.isSpend = ' + busqueda.isSpend : 'operaciones.isSpend = 0 or operaciones.isSpend = 1'}
+  ${busqueda.fechaFin ? 'AND operaciones.fechaOperacion < "' + busqueda.fechaFin + '"' : 'AND operaciones.fechaOperacion'}
+  ${busqueda.fechaIni ? 'AND operaciones.fechaOperacion > "' + busqueda.fechaIni + '"' : 'AND operaciones.fechaOperacion'}
   AND operaciones.monto ${busqueda.monto > 0 ? '=' + busqueda.monto : '> 0'}
    ${busqueda.anotacionId ? 'AND operaciones.anotacionId =' + busqueda.anotacionId : 'AND operaciones.anotacionId '}`;
     console.log(sql);

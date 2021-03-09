@@ -1,6 +1,6 @@
 export class FiltroBusqueda {
   constructor(private _monto?: number, private _anotacionId?: number,
-              private _fondoId?: number, private _isSpend?: boolean, private _fechaIni?: Date, private _fechaFin?: Date) {
+              private _fondoId?: number, private _isSpend?: number, private _fechaIni?: Date, private _fechaFin?: Date) {
   }
 
   get monto(): number {
@@ -23,7 +23,7 @@ export class FiltroBusqueda {
     return this._fechaFin;
   }
 
-  get isSpend(): boolean {
+  get isSpend(): number {
     return this._isSpend;
   }
 }
