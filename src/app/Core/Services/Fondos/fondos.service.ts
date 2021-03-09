@@ -13,6 +13,7 @@ export class FondosService {
   private _fondosMap: Map<number, Fondo>;
   private _fondosArray: Fondo[];
   private _dateNow: number;
+  private _fondoId: number;
 
 
   private lastOp: Operacion;
@@ -23,7 +24,7 @@ export class FondosService {
     this.generateData();
   }
 
-   generateData() {
+  generateData() {
     this._fondosArray = [];
     this._fondosMap = new Map<number, Fondo>();
 
@@ -41,6 +42,7 @@ export class FondosService {
             .then((data) => {
 
               data.forEach((e) => {
+                this._fondoId = e.id;
                 let arrayOp: Operacion[] = [];
                 if (this.operacionesService.operaciones.get(e.id)) {
                   arrayOp = this.operacionesService.operaciones.get(e.id).get(e.idMes);
@@ -109,5 +111,9 @@ export class FondosService {
 
   get dateNow(): number {
     return this._dateNow;
+  }
+
+  get fondoId(): number {
+    return this._fondoId;
   }
 }

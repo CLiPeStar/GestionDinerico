@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-operaciones-historic',
@@ -7,9 +8,12 @@ import {Component, OnInit} from '@angular/core';
 })
 export class OperacionesHistoricPage implements OnInit {
   private _tituloFondo = 'Mes';
-  id: number = 3;
+  id: number;
 
-  constructor() {
+  constructor(private router: Router, private rutaActivada: ActivatedRoute) {
+    this.rutaActivada.queryParamMap.subscribe(() => {
+      this.id = this.router.getCurrentNavigation().extras.state.id;
+    });
   }
 
   ngOnInit() {

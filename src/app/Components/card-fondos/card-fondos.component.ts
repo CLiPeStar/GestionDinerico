@@ -53,7 +53,7 @@ export class CardFondosComponent implements OnInit {
       arrayColor.push(key[0].color);
       arrayDatos.push(key[1]);
     }
-    arrayDatos.push(this.fondos.fondosMap.get(3).monto);
+    arrayDatos.push(this.fondos.fondosMap.get(this.fondos.fondoId).monto);
     arrayColor.push('#025955');
     arrayLabel.push('Salario');
     console.log(arrayColor);
@@ -74,7 +74,9 @@ export class CardFondosComponent implements OnInit {
 
   public routerMe(item: Fondo) {
     const extrasDeNavegcacion: NavigationExtras = {
-      state: {}
+      state: {
+        id: item.id
+      }
     };
     this.route.navigate(['operaciones-historic'], extrasDeNavegcacion);
   }
