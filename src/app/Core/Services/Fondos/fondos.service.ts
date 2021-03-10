@@ -5,6 +5,8 @@ import {OperacionesService} from '../Operaciones/operaciones.service';
 import {Operacion} from '../../Class/Operacion';
 import {OperacionSimplificada} from '../../Class/OperacionSimplificada';
 import {AnotacionesService} from '../Anotaciones/anotaciones.service';
+import {UsuarioService} from '../Usuario/usuario.service';
+import {FondoSimpl} from '../../Class/FondoSimpl';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +20,8 @@ export class FondosService {
 
   private lastOp: Operacion;
 
-  constructor(private db: DataAccesService, private operacionesService: OperacionesService, private anotacioneservice: AnotacionesService) {
+  constructor(private db: DataAccesService, private operacionesService: OperacionesService, private anotacioneservice: AnotacionesService,
+              private usuarioServ: UsuarioService) {
 
     this.generateIdMonth();
     // this.generateData();
@@ -35,24 +38,25 @@ export class FondosService {
             const anot = this.anotacioneservice.anotacionesMap.get(x.anotacionId);
             const operacion: Operacion = new Operacion(x.id, x.concepto, x.monto, anot, x.fechaOperacion, x.isSpend);
             this.lastOp = operacion;
-          })
-          ;
+          });
 
           this.db.getFondoByIdMes(this._dateNow)
             .then((data) => {
-
-              data.forEach((e) => {
-                this._fondoId = e.id;
-                let arrayOp: Operacion[] = [];
-                if (this.operacionesService.operaciones.get(e.id)) {
-                  arrayOp = this.operacionesService.operaciones.get(e.id).get(e.idMes);
-                }
-
-                const fondo = new Fondo(e.name, e.fondo, e.idMes, arrayOp, e.gastado, this.lastOp, e.id);
-                this._fondosMap.set(fondo.id, fondo);
-                this._fondosArray.push(fondo);
-              });
-              resolve();
+              if (data[0]) {
+                data.forEach((e) => {
+                  this._fondoId = e.id;
+                  let arrayOp: Operacion[] = [];
+                  if (this.operacionesService.operaciones.get(e.id)) {
+                    arrayOp = this.operacionesService.operaciones.get(e.id).get(e.idMes);
+                  }
+                  const fondo = new Fondo(e.name, e.fondo, e.idMes, arrayOp, e.gastado, this.lastOp, e.id);
+                  this._fondosMap.set(fondo.id, fondo);
+                  this._fondosArray.push(fondo);
+                });
+                resolve();
+              } else {
+                this.insertarNuevoRegistro()
+              }
             })
             .catch((err) => {
               console.log('Fondos services 52:' + err);
@@ -64,6 +68,30 @@ export class FondosService {
     });
 
 
+  }
+
+  private insertarNuevoRegistro() {
+    return new Promise<void>((resolve, reject) => {
+      this.db.GetUltimoFondo()
+        .then((data) => {
+          const usuario = this.usuarioServ.Usuario;
+          if (data[0]) {
+
+            const ahorros = usuario.ahorro;
+            const monto = data[0].fondo;
+            const ahorroMasMonto = ahorros + monto;
+            this.db.InsertNuevoAhorroHistorico(ahorroMasMonto, this.dateNow, new Date().getFullYear())
+              .then(() => {
+                this.db.ActualizarAhorros(ahorroMasMonto)
+                  .then(() => {
+                  });
+              });
+          }
+
+          const fondo = new FondoSimpl(usuario.fondoName, usuario.montoMes, this.dateNow, 0);
+          this.db.InsertarNuevoFondo(fondo).then(() => location.reload());
+        });
+    });
   }
 
   private generateIdMonth() {

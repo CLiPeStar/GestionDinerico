@@ -1,28 +1,28 @@
 import {Injectable} from '@angular/core';
 import {DataAccesService} from '../BBDD/data-acces.service';
+import {Usuario} from '../../Class/Usuario';
 import {Ahorros} from '../../Class/ahorros';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AhorrosService {
-  private _ahorros: Ahorros[];
-
+export class UsuarioService {
+  private _Usuario: Usuario;
 
   constructor(private db: DataAccesService) {
-    this._ahorros = [];
-
   }
 
   generateData() {
-    return new Promise<void>((resolve, reject) => {
-      this.db.GetHistoricoAhorros(new Date().getFullYear())
+    return new Promise<boolean>((resolve, reject) => {
+      this.db.GetUsuario()
         .then((data) => {
-          data.forEach((e) => {
-            const ahorro: Ahorros = new Ahorros(e.monto, e.idMes);
-            this._ahorros.push(ahorro);
-          });
-          resolve();
+          if (data[0]) {
+            this._Usuario = new Usuario(data[0].name, data[0].fondoName, data[0].montoFondo, data[0].idCliente, data[0].ahorro);
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+
         })
         .catch((err) => {
           console.log('Ahorros services:' + err);
@@ -35,7 +35,7 @@ export class AhorrosService {
 
   }
 
-  get ahorros(): Ahorros[] {
-    return this._ahorros;
+  get Usuario(): Usuario {
+    return this._Usuario;
   }
 }

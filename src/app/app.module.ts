@@ -18,6 +18,8 @@ import {OperacionesService} from './Core/Services/Operaciones/operaciones.servic
 import {FondosService} from './Core/Services/Fondos/fondos.service';
 import {RecordatorioService} from './Core/Services/Recordatorio/recordatorio.service';
 import {HomePage} from './home/home.page';
+import {UsuarioService} from './Core/Services/Usuario/usuario.service';
+import {AhorrosService} from './Core/Services/Ahorros/ahorros.service';
 
 registerLocaleData(localeEs);
 
@@ -33,6 +35,8 @@ registerLocaleData(localeEs);
     AnotacionesService,
     OperacionesService,
     RecordatorioService,
+    UsuarioService,
+    AhorrosService,
     SqliteDbCopy,
     SQLite,
     FondosService,

@@ -8,6 +8,7 @@ import {Anotaciones} from '../../Class/Anotaciones';
 import {OperacionSimplificada} from '../../Class/OperacionSimplificada';
 import {FechaRecordatorio} from '../../Class/FechaRecordatorio';
 import {FiltroBusqueda} from '../../Class/FiltroBusqueda';
+import {FondoSimpl} from '../../Class/FondoSimpl';
 
 @Injectable({
   providedIn: 'root'
@@ -21,13 +22,13 @@ export class DataAccesService {
 
   private getConector() {
     return {
-      name: 'EcoPers.db',
+      name: 'EcoPers2.db',
       location: 'default',
       createFromLocation: 1,
     };
   }
 
-  private openDB() {
+  openDB() {
     return new Promise((resolve, reject) => {
       this.plt.ready()
         .then(() => {
@@ -274,8 +275,96 @@ export class DataAccesService {
     });
   }
 
-  GetHistoricoAhorros(idMes: number) {
-    const sql = `SELECT * FROM historicoAhorros WHERE historicoAhorros.idMes =${idMes}`;
+  GetHistoricoAhorros(year: number) {
+    const sql = `SELECT * FROM historicoAhorros WHERE historicoAhorros.year =${year}`;
+    const searchParams = [];
+    const request: Request = new Request(sql, searchParams);
+
+    return new Promise<Array<any>>((resolve, reject) => {
+      this.executeSentence(request)
+        .then((data) => resolve(data))
+        .catch((e) => reject(e));
+    });
+  }
+
+  GetUsuario() {
+    const sql = `SELECT * from configPerson `;
+    const searchParams = [];
+    const request: Request = new Request(sql, searchParams);
+
+    return new Promise<Array<any>>((resolve, reject) => {
+      this.executeSentence(request)
+        .then((data) => resolve(data))
+        .catch((e) => reject(e));
+    });
+  }
+
+  GetUltimoFondo() {
+    const sql = `Select * from fondos
+                  WHERE fondos.idMes = (
+                                      SELECT MAX( fondos.idMes)
+                                      FROM fondos
+)`;
+    const searchParams = [];
+    const request: Request = new Request(sql, searchParams);
+
+    return new Promise<Array<any>>((resolve, reject) => {
+      this.executeSentence(request)
+        .then((data) => resolve(data))
+        .catch((e) => reject(e));
+    });
+  }
+
+  InsertNuevoAhorroHistorico(monto: number, idmes: number, year: number) {
+    const sql = `INSERT INTO historicoAhorros (
+                                 monto,
+                                 idMes,
+                                 year
+                             )
+                             VALUES (
+                                 ${monto},
+                                 ${idmes},
+                                 ${year}
+                             );
+`;
+    const searchParams = [];
+    const request: Request = new Request(sql, searchParams);
+
+    return new Promise<Array<any>>((resolve, reject) => {
+      this.executeSentence(request)
+        .then((data) => resolve(data))
+        .catch((e) => reject(e));
+    });
+  }
+
+  ActualizarAhorros(ahorro: number) {
+    const sql = `UPDATE configPerson
+   SET
+       ahorro = ${ahorro}`;
+    const searchParams = [];
+    const request: Request = new Request(sql, searchParams);
+
+    return new Promise<Array<any>>((resolve, reject) => {
+      this.executeSentence(request)
+        .then((data) => resolve(data))
+        .catch((e) => reject(e));
+    });
+  }
+
+  InsertarNuevoFondo(fondo: FondoSimpl) {
+    const sql = `INSERT INTO fondos (
+                       name,
+                       fondo,
+                       idMes,
+                       gastado
+                   )
+                   VALUES (
+                       '${fondo.name}',
+                       ${fondo.monto},
+                       ${fondo.idMes},
+                       ${fondo.gastado}
+                   );
+`;
     const searchParams = [];
     const request: Request = new Request(sql, searchParams);
 

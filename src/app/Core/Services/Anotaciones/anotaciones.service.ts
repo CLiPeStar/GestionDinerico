@@ -10,7 +10,7 @@ export class AnotacionesService {
   private _anotacionesMap: Map<number, Anotaciones>;
 
   constructor(private dataBd: DataAccesService) {
-    this.generateData();
+    // this.generateData();
   }
 
    generateData() {

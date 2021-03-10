@@ -42,9 +42,14 @@ const routes: Routes = [
   {
     path: 'gastos',
     loadChildren: () => import('./Pages/gastos/gastos.module').then( m => m.GastosPageModule)
-  },  {
+  },
+  {
     path: 'fondos',
     loadChildren: () => import('./Pages/Fondos/fondos/fondos.module').then( m => m.FondosPageModule)
+  },
+  {
+    path: 'registrar-usuario',
+    loadChildren: () => import('./Pages/registrar-usuario/registrar-usuario.module').then( m => m.RegistrarUsuarioPageModule)
   },
 
 ];

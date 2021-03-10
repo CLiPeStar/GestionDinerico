@@ -13,7 +13,7 @@ export class OperacionesService {
 
   constructor(private db: DataAccesService, private anotacioneservice: AnotacionesService) {
     this.generateIdMonth();
-    this.generateData();
+    // this.generateData();
   }
 
    generateData() {
