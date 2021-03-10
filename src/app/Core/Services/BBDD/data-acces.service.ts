@@ -254,6 +254,7 @@ export class DataAccesService {
     });
   }
 
+
   FiltrarBusqueda(busqueda: FiltroBusqueda) {
     const sql = `SELECT *
   FROM operaciones WHERE
@@ -263,6 +264,18 @@ export class DataAccesService {
   AND operaciones.monto ${busqueda.monto > 0 ? '=' + busqueda.monto : '> 0'}
    ${busqueda.anotacionId ? 'AND operaciones.anotacionId =' + busqueda.anotacionId : 'AND operaciones.anotacionId '}`;
     console.log(sql);
+    const searchParams = [];
+    const request: Request = new Request(sql, searchParams);
+
+    return new Promise<Array<any>>((resolve, reject) => {
+      this.executeSentence(request)
+        .then((data) => resolve(data))
+        .catch((e) => reject(e));
+    });
+  }
+
+  GetHistoricoAhorros(idMes: number) {
+    const sql = `SELECT * FROM historicoAhorros WHERE historicoAhorros.idMes =${idMes}`;
     const searchParams = [];
     const request: Request = new Request(sql, searchParams);
 

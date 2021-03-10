@@ -21,7 +21,7 @@ export class FondosService {
   constructor(private db: DataAccesService, private operacionesService: OperacionesService, private anotacioneservice: AnotacionesService) {
 
     this.generateIdMonth();
-    this.generateData();
+    // this.generateData();
   }
 
   generateData() {
