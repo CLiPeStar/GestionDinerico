@@ -20,7 +20,10 @@ export class MyHeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.fondo = this.fondosServ.fondosMap.get(this.idFondo);
+    if (this.idFondo){
+      this.fondo = this.fondosServ.fondosMap.get(this.idFondo);
+
+    }
   }
 
   toggleMenu() {

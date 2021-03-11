@@ -4,6 +4,7 @@ import {AhorrosService} from '../../Core/Services/Ahorros/ahorros.service';
 import {Ahorros} from '../../Core/Class/ahorros';
 import {Usuario} from '../../Core/Class/Usuario';
 import {UsuarioService} from '../../Core/Services/Usuario/usuario.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-cuenta',
@@ -15,7 +16,7 @@ export class CuentaPage implements OnInit {
   public chart: any = null;
   private _Usuario: Usuario = null;
 
-  constructor(private ahorrosServ: AhorrosService, private usuarioServ: UsuarioService) {
+  constructor(private ahorrosServ: AhorrosService, private usuarioServ: UsuarioService, private router: Router) {
     this._Usuario = this.usuarioServ.Usuario;
   }
 
@@ -101,5 +102,9 @@ export class CuentaPage implements OnInit {
 
   get Usuario(): Usuario {
     return this._Usuario;
+  }
+
+  routerMe() {
+    this.router.navigate(['/registrar-usuario']);
   }
 }

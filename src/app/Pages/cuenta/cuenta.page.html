@@ -13,7 +13,7 @@
   </div>
 
   <div class=" flex font-bold">
-    <button class=" flex rounded-md ml-5 mr-1 bg-blue-400 text-center justify-center items-center" style="width: 50%">
+    <button (click)="routerMe()" class=" flex rounded-md ml-5 mr-1 bg-blue-400 text-center justify-center items-center" style="width: 50%">
       <ion-icon class="w-8 h-8" name="construct-outline"></ion-icon>
     </button>
     <div *ngIf="Usuario.ahorro>0" class="flex box ml-1 mr-5 text-black items-center" style="width: 50%">

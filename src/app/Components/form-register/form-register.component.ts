@@ -88,8 +88,6 @@ export class FormRegisterComponent implements OnInit {
           });
       })
       .catch();
-
-
   }
 
   get formGroup(): FormGroup {

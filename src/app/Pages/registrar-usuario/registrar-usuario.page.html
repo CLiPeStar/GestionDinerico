@@ -1,9 +1,41 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>{{title}}</ion-title>
-  </ion-toolbar>
+<ion-header [translucent]="true">
+  <div class="pt-3 flex bg-gradient-to-r from-green-500 to-blue-400 flex-wrap">
+    <ion-title class="font-bold text-2xl text-black">
+      {{title}}
+    </ion-title>
+  </div>
 </ion-header>
-
 <ion-content>
+  <form [formGroup]="formGroup" class="pt-4">
+    <ion-item class="rounded ">
+      <ion-label class="pr-2">Nombre:</ion-label>
+      <ion-input class="rounded text-center bg-black text-white" formControlName=nombre [(ngModel)]="nombre"
+                 type="text"
+                 min="0" placeholder="Nombre Usuario"></ion-input>
+    </ion-item>
+    <ion-item class="rounded ">
+      <ion-label class="pr-2">Nombre Fondo:</ion-label>
+      <ion-input class="rounded text-center bg-black text-white" formControlName=fondoNombre [(ngModel)]="fondoNombre"
+                 type="text" placeholder="Nombre Fondo"></ion-input>
+    </ion-item>
+    <ion-item class="rounded ">
+      <ion-label class="pr-2">Cuantia del Fondo:</ion-label>
+      <ion-input class="rounded text-center bg-black text-white" type="number" formControlName=fondoMonto
+                 [(ngModel)]="fondoMonto"
+      ></ion-input>
+    </ion-item>
+    <ion-item class="rounded">
+      <ion-label class="pr-2">Ahorros:</ion-label>
+      <ion-input class="rounded text-center bg-black text-white" type="number" formControlName=ahorroMonto
+                 [(ngModel)]="ahorroMonto"
+      ></ion-input>
+    </ion-item>
+
+  </form>
+  <div *ngIf="validAll()">
+    <div class="ion-text-right" (click)="procesarForm()">
+      <ion-icon class="p-6 w-12 h-12 text-black" name="arrow-forward-outline"></ion-icon>
+    </div>
+  </div>
 
 </ion-content>

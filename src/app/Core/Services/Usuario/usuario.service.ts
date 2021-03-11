@@ -17,7 +17,7 @@ export class UsuarioService {
       this.db.GetUsuario()
         .then((data) => {
           if (data[0]) {
-            this._Usuario = new Usuario(data[0].name, data[0].fondoName, data[0].montoFondo, data[0].idCliente, data[0].ahorro);
+            this._Usuario = new Usuario(data[0].name, data[0].fondoName, data[0].montoFondo, data[0].ahorro, data[0].idCliente);
             resolve(true);
           } else {
             resolve(false);
@@ -37,5 +37,11 @@ export class UsuarioService {
 
   get Usuario(): Usuario {
     return this._Usuario;
+  }
+
+  insertUser(usuario: Usuario) {
+    return new Promise<void>((resolve, reject) => {
+      this.db.InsertNewUsuario(usuario).then(() => resolve());
+    });
   }
 }

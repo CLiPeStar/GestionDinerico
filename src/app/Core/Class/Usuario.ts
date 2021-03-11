@@ -1,7 +1,7 @@
 export class Usuario {
 
 
-  constructor(private _name: string, private _fondoName: string, private _montoMes: number, private _idCliente: string, private _ahorro: number) {
+  constructor(private _name: string, private _fondoName: string, private _montoMes: number, private _ahorro: number, private _idCliente?: string) {
   }
 
 

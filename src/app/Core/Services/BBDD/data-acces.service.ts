@@ -9,6 +9,7 @@ import {OperacionSimplificada} from '../../Class/OperacionSimplificada';
 import {FechaRecordatorio} from '../../Class/FechaRecordatorio';
 import {FiltroBusqueda} from '../../Class/FiltroBusqueda';
 import {FondoSimpl} from '../../Class/FondoSimpl';
+import {Usuario} from '../../Class/Usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class DataAccesService {
 
   private getConector() {
     return {
-      name: 'EcoPers2.db',
+      name: 'EcoPers1.db',
       location: 'default',
       createFromLocation: 1,
     };
@@ -364,6 +365,30 @@ export class DataAccesService {
                        ${fondo.idMes},
                        ${fondo.gastado}
                    );
+`;
+    const searchParams = [];
+    const request: Request = new Request(sql, searchParams);
+
+    return new Promise<Array<any>>((resolve, reject) => {
+      this.executeSentence(request)
+        .then((data) => resolve(data))
+        .catch((e) => reject(e));
+    });
+  }
+
+  InsertNewUsuario(usuario: Usuario) {
+    const sql = `INSERT INTO configPerson (
+                             name,
+                             fondoName,
+                             montoFondo,
+                             ahorro
+                         )
+                         VALUES (
+                             '${usuario.name}',
+                             '${usuario.fondoName}',
+                             ${usuario.montoMes},
+                             ${usuario.ahorro}
+                         );
 `;
     const searchParams = [];
     const request: Request = new Request(sql, searchParams);
