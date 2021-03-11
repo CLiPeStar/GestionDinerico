@@ -82,9 +82,18 @@ export class DataAccesService {
               .executeSql(request.sql, request.searchParams)
               .then((data) => {
                 const responseData: Array<any> = [];
-                for (let i = 0; i < data.rows.length; i++) {
-                  const obj = data.rows.item(i);
-                  responseData.push(obj);
+                if (data.mock) {
+                  for (let i = 0; i < data.rows.length; i++) {
+                    console.log(data.rows.length);
+                    const obj = data.rows.items[i];
+                    responseData.push(obj);
+                  }
+                } else {
+                  for (let i = 0; i < data.rows.length; i++) {
+                    console.log(data.rows.length);
+                    const obj = data.rows.item(i);
+                    responseData.push(obj);
+                  }
                 }
                 resolve(responseData);
 
@@ -277,7 +286,7 @@ export class DataAccesService {
   }
 
   GetHistoricoAhorros(year: number) {
-    const sql = `SELECT * FROM historicoAhorros WHERE historicoAhorros.year =${year}`;
+    const sql = `SELECT * FROM historicoAhorros WHERE historicoAhorros.year = ${year}`;
     const searchParams = [];
     const request: Request = new Request(sql, searchParams);
 
