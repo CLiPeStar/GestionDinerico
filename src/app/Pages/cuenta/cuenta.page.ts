@@ -4,7 +4,7 @@ import {AhorrosService} from '../../Core/Services/Ahorros/ahorros.service';
 import {Ahorros} from '../../Core/Class/ahorros';
 import {Usuario} from '../../Core/Class/Usuario';
 import {UsuarioService} from '../../Core/Services/Usuario/usuario.service';
-import {Router} from '@angular/router';
+import {NavigationExtras, Router} from '@angular/router';
 
 @Component({
   selector: 'app-cuenta',
@@ -105,6 +105,12 @@ export class CuentaPage implements OnInit {
   }
 
   routerMe() {
-    this.router.navigate(['/registrar-usuario']);
+    const extras: NavigationExtras = {
+      state: {
+        usuario: this.Usuario,
+        update: true,
+      }
+    };
+    this.router.navigate(['/registrar-usuario'], extras);
   }
 }

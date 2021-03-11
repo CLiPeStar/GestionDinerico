@@ -399,4 +399,21 @@ export class DataAccesService {
         .catch((e) => reject(e));
     });
   }
+
+  UpdateUsuario(usuario: Usuario) {
+    const sql = `UPDATE configPerson
+       SET name = '${usuario.name}',
+       fondoName = '${usuario.fondoName}',
+       montoFondo = ${usuario.montoMes},
+       ahorro = ${usuario.ahorro}
+ WHERE 1`;
+    const searchParams = [];
+    const request: Request = new Request(sql, searchParams);
+
+    return new Promise<Array<any>>((resolve, reject) => {
+      this.executeSentence(request)
+        .then((data) => resolve(data))
+        .catch((e) => reject(e));
+    });
+  }
 }

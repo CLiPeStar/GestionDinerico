@@ -44,4 +44,10 @@ export class UsuarioService {
       this.db.InsertNewUsuario(usuario).then(() => resolve());
     });
   }
+
+  updateUser(usuario: Usuario) {
+    return new Promise<void>((resolve, reject) => {
+      this.db.UpdateUsuario(usuario).then(() => resolve());
+    });
+  }
 }

@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {AnotacionesService} from '../Core/Services/Anotaciones/anotaciones.service';
 import {FondosService} from '../Core/Services/Fondos/fondos.service';
 import {OperacionesService} from '../Core/Services/Operaciones/operaciones.service';
-import {Router} from '@angular/router';
+import {NavigationExtras, Router} from '@angular/router';
 import {AhorrosService} from '../Core/Services/Ahorros/ahorros.service';
 import {UsuarioService} from '../Core/Services/Usuario/usuario.service';
 
@@ -38,7 +38,13 @@ export class HomePage {
                 });
             });
         } else {
-          this.router.navigate(['/registrar-usuario']);
+          const extras: NavigationExtras = {
+            state: {
+              usuario: null,
+              update: false,
+            }
+          };
+          this.router.navigate(['/registrar-usuario'], extras);
         }
       });
   }
